@@ -1,0 +1,11 @@
+---
+- hosts: all
+  roles:
+    - {role: jetbrains, tags:[pycharm], jetbrains_product_code: "PC", jetbrains_product: "PyCharm", jetbrains_product_pattern: "[Pp]y[Cc]harm", jetbrains_multi_editions: yes}
+    - {role: jetbrains, tags:[rubymine], jetbrains_product_code: "RM", jetbrains_product: "RubyMine", jetbrains_product_pattern: "[Rr]uby[Mm]ine"}
+    - {role: jetbrains, tags:[webstorm], jetbrains_product_code: "WS", jetbrains_product: "WebStorm", jetbrains_product_pattern: "[Ww]eb[Ss]torm"}
+    - {role: jetbrains, tags:[phpstorm], jetbrains_product_code: "PS", jetbrains_product: "PhpStorm", jetbrains_product_pattern: "[Pp][Hh][Pp][Ss]torm"}
+    - {role: jetbrains, tags:[clion], jetbrains_product_code: "CL", jetbrains_product: "CLion", jetbrains_product_pattern: "[Cc][Ll]ion"}
+    - {role: jetbrains, tags:[datagrip], jetbrains_product_code: "DG", jetbrains_product: "DataGrip", jetbrains_product_pattern: "[Dd]ata[Gg]rip"}
+    - {role: jetbrains, tags:[appcode], jetbrains_product_code: "AC", jetbrains_product: "AppCode", jetbrains_install_linux: no}
+    - {role: jetbrains, tags:[intellij], jetbrains_product_code: "II", jetbrains_product: "IntelliJ IDEA", jetbrains_product_pattern: "idea-[Ii]", jetbrains_multi_editions: yes, jetbrains_professional_code_postfix: 'U', jetbrains_community_name_pattern_postfix: '[Cc]', jetbrains_professional_name_pattern_postfix: '[Uu]', jetbrains_symlink_src: 'idea.sh'}

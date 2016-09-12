@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - {role: jetbrains,
+       jetbrains_product_code: "RM",
+       jetbrains_product: "RubyMine",
+       jetbrains_product_pattern: "[Rr]uby[Mm]ine"}

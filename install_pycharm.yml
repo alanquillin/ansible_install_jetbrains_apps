@@ -1,0 +1,8 @@
+---
+- hosts: all
+  roles:
+    - {role: jetbrains,
+       jetbrains_product_code: "PC",
+       jetbrains_product: "PyCharm",
+       jetbrains_product_pattern: "[Pp]y[Cc]harm",
+       jetbrains_multi_editions: yes}

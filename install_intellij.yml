@@ -1,0 +1,12 @@
+---
+- hosts: all
+  roles:
+    - {role: jetbrains,
+       jetbrains_product_code: "II",
+       jetbrains_product: "IntelliJ IDEA",
+       jetbrains_product_pattern: "idea-[Ii]",
+       jetbrains_multi_editions: yes,
+       jetbrains_professional_code_postfix: 'U',
+       jetbrains_community_name_pattern_postfix: '[Cc]',
+       jetbrains_professional_name_pattern_postfix: '[Uu]',
+       jetbrains_symlink_src: 'idea.sh'}

@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - {role: jetbrains,
+       jetbrains_product_code: "WS",
+       jetbrains_product: "WebStorm",
+       jetbrains_product_pattern: "[Ww]eb[Ss]torm"}

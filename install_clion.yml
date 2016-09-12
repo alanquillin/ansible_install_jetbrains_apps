@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - {role: jetbrains,
+       jetbrains_product_code: "CL",
+       jetbrains_product: "CLion",
+       jetbrains_product_pattern: "[Cc][Ll]ion"}

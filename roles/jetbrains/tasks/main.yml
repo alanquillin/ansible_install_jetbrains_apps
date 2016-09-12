@@ -1,0 +1,3 @@
+---
+- name: ({{jetbrains_product}}) Running {{jetbrains_installer}} installer
+  include: "{{ jetbrains_installer }}"

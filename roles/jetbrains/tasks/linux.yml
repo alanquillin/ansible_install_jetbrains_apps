@@ -1,0 +1,107 @@
+---
+- name: ({{jetbrains_product}}) Checking if {{ jetbrains_product_name }} directory already exists
+  stat: path=/opt/{{ jetbrains_product_name }}
+  register: jetbrains_stats
+  become: yes
+  become_user: "{{ username }}"
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Checking if old {{ jetbrains_product_name }} backup directory exists
+  stat: path=/opt/{{ jetbrains_product_name }}_bck
+  register: jetbrains_bck_stats
+  become: yes
+  become_user: "{{ username }}"
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Remove old {{ jetbrains_product_name }} backup directory (if it exists)
+  file: path=/opt/{{ jetbrains_product_name }}_bck
+        state=absent
+  become: yes
+  become_method: sudo
+  when: jetbrains_bck_stats.stat.exists
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Backup {{ jetbrains_product_name }} directory (if it exists)
+  file: src=/opt/{{ jetbrains_product_name }}
+        dest=/opt/{{ jetbrains_product_name }}_bck
+        state=directory
+  become: yes
+  become_method: sudo
+  when: jetbrains_stats.stat.exists and jetbrains_backup_old|bool
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Remove old {{ jetbrains_product_name }} directory (if it exists)
+  file: path=/opt/{{ jetbrains_product_name }}
+        state=absent
+  become: yes
+  become_method: sudo
+  when: jetbrains_stats.stat.exists
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Downloading {{jetbrains_linux_product_url}}
+  get_url: url={{ jetbrains_linux_product_url }}
+           dest=/opt/{{ jetbrains_file_name }}
+  become: yes
+  become_method: sudo
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Extract /opt/{{ jetbrains_file_name }}
+  unarchive: src=/opt/{{ jetbrains_file_name }}
+             dest=/opt
+             copy=false
+  become: yes
+  become_method: sudo
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Find extracted dirctory
+  find: path=/opt
+        file_type=directory
+        pattern="{{ jetbrains_product_name_pattern }}-"
+        use_regex=yes
+  register: jetbrains_find_results
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Rename the extracted directory
+  command: "mv \"{{ jetbrains_find_results.files[0].path}}\"  \"/opt/{{ jetbrains_product_name }}\""
+  become: yes
+  become_method: sudo
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Set {{ jetbrains_product_name }} directory mode and owner
+  file: path=/opt/{{ jetbrains_product_name }}
+        mode=0755
+  become: yes
+  become_method: sudo
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Set {{ jetbrains_product_name }} directory owner (recursive)
+  file: path=/opt/{{ jetbrains_product_name }}
+        owner={{ username }}
+        recurse=yes
+  become: yes
+  become_method: sudo
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Remove downloaded {{ jetbrains_product_name }} archive file
+  file: path=/opt/{{ jetbrains_file_name }}
+        state=absent
+  become: yes
+  become_method: sudo
+  tags: 'product_tags'
+
+- name: (Ubuntu) ({{jetbrains_product}}) Update Certificates for jetbrains registration
+  command: update-ca-certificates -f
+  become: yes
+  become_method: sudo
+  when: ansible_distribution == 'Ubuntu'
+  tags: 'product_tags'
+
+- name: ({{jetbrains_product}}) Create symlink to /usr/local/bin/{{ jetbrains_symlink_file }}
+  file: src=/opt/{{ jetbrains_product_name }}/bin/{{ jetbrains_symlink_src }}
+        dest=/usr/local/bin/{{ jetbrains_symlink_file }}
+        state=link
+  become: yes
+  become_method: sudo
+  tags:
+    - jetbrains
+    - symlink

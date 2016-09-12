@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - {role: jetbrains,
+       jetbrains_product_code: "AC",
+       jetbrains_product: "AppCode",
+       jetbrains_install_linux: no}

@@ -1,0 +1,11 @@
+---
+jetbrains_download_pro_edition: yes
+jetbrains_multi_editions: no
+jetbrains_install_linux: yes
+jetbrains_install_osx: yes
+jetbrains_backup_old: yes
+jetbrains_professional_code_postfix: 'P'
+
+### Linux specific variables
+jetbrains_community_name_pattern_postfix: '-(\s?[Cc][Ee])?([Cc]ommunity)?'
+jetbrains_professional_name_pattern_postfix: ''

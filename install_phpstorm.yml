@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - {role: jetbrains,
+       jetbrains_product_code: "PS",
+       jetbrains_product: "PhpStorm",
+       jetbrains_product_pattern: "[Pp][Hh][Pp][Ss]torm"}
